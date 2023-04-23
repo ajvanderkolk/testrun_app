@@ -30,6 +30,6 @@ for page_num, page in enumerate(reader.pages):
     clean_text = [word.lower() for word in filtered_text if word.isalpha()]
 
     # write clean text to file
-    with open('extracted_text_three.txt', 'a') as f:
+    with open('extracted_text.txt', 'a') as f:
         f.write(f'Page {page_num+1}:\n')
         f.write(' '.join(clean_text) + '\n')
