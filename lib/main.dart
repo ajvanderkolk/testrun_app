@@ -70,14 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
       allowedExtensions: ['pdf'],
     );
     if (result != null) {
-      final file = File(result.files.single.path!);
+      final bytes = result.files.single.bytes;
       final processResult = await Process.run(
         'python',
-        ['extract_PDF.py', file.path],
+        ['extract_PDF.py'],
+        input: bytes,
       );
       log(processResult.stdout.toString(), name: 'Python Console Output');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
