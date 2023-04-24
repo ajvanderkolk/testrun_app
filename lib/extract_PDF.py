@@ -14,7 +14,7 @@ file_path = sys.argv[1]
 processResult = subprocess.run(['python', 'extract_text.py', file_path], capture_output=True, text=True)
 
 # use logging to print to console
-logging.info('Python Console Output: {}'.format(processResult.stdout))
+# logging.info('Python Console Output: {}'.format(processResult.stdout))
 
 # create pdf reader object
 with open(file_path, 'rb') as file:
