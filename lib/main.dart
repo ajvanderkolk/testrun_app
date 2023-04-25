@@ -1,8 +1,4 @@
-import 'dart:io';
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-
 import 'view/home_page.dart';
 
 void main() {

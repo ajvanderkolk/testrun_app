@@ -14,6 +14,8 @@ class UserApi {
       var json = response.body;
       print(json); // Add this line to print the response data
       return userFromJson(json);
+    } else {
+      return null;
     }
   }
   //Add New User
