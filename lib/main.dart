@@ -9,19 +9,21 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
+  // Build home page
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Navigation Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Home Page'),
+      home: const AccountHomePage(title: 'Account Home Page'),
     );
   }
 }
-
+// Create state for Home Page
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -30,6 +32,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// Set content and state for Home Page
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -86,3 +89,68 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+// Create state for Account Home Page
+class AccountHomePage extends StatefulWidget {
+  const AccountHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<AccountHomePage> createState() => _AccountHomePageState();
+}
+
+// Set content and state for Account Home Page
+class _AccountHomePageState extends State<AccountHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Account Home Page'),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () async {
+            var message = await Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+                return const SecondPage(title: 'SecondPage');
+               }));
+                    // This message will print to console
+            print(message);
+          },
+          child: const Text('Next'),
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:  Text('Second Page'),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.pop(context, "Returned from Second Page");
+          },
+          child: const Text('Go Back'),
+        ),
+      ),
+    );
+  }
+}
+
+
