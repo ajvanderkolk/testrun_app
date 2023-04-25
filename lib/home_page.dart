@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
-    
+
+
+
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
@@ -10,62 +12,78 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-Future<List<User>?>? _futureUsers;
+  List<User>? users;
+  var isLoaded = false;
 
-@override
-void initState() {
-  super.initState();
-  _futureUsers = UserApi().getAllUsers();
-}
+  // Show 'Failed to load user data in pop-up box'
+  void showErrorMessage() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Error"),
+        content: const Text("Failed to load user data."),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(title: const Text("Python RestAPI Flutter")),
-    body: FutureBuilder<List<User>?>(
-      future: _futureUsers,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return const Center(
-            child: Text("Failed to load user data."),
-          );
-        } else if (!snapshot.hasData) {
-          return const Center(
-            child: Text("No user data found."),
-          );
-        }
+  // Set initial state
+  @override
+  void initState() {
+    super.initState();
+    getRecord();
+  }
 
-        final users = snapshot.data!;
+  Future<void> getRecord() async {
+    print('balls');
 
-        return ListView.builder(
-          itemCount: users.length,
-          itemBuilder: (context, index) {
-            return Container(
-              child: ListTile(
-                title: Text(users[index].name),
-                subtitle: Text(users[index].contact),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.delete)),
-                  ],
-                ),
+    try {
+      final userList = await UserApi().getAllUsers();
+      if (userList != null) {
+        setState(() {
+          users = userList;
+          isLoaded = true;
+        });
+      } else {
+        showErrorMessage();
+      }
+    } catch (e) {
+      showErrorMessage();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Python RestAPI Flutter"),),
+      body: isLoaded ? ListView.builder(
+        itemCount: users?.length,
+        itemBuilder: (context, index){
+          return Container(
+            child: ListTile(
+              title: Text(users![index].name),
+              subtitle: Text(users![index].contact),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.edit),),
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.delete),),
+                ],
               ),
-            );
-          },
-        );
-      },
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: (){},
-      child: const Icon(Icons.add),
-    ),
-  );
-}
+            ),
+          );
+        },
+      ) : const Center(child: CircularProgressIndicator()),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
 }
 
