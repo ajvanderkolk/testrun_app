@@ -93,15 +93,16 @@ class _HomepageState extends State<Homepage> {
         child: ListView.builder(
         itemCount: users?.length,
         itemBuilder: (context, index){
+          // Figure out how to get padding in list tile
           return Container(
             padding: const EdgeInsets.fromLTRB(30.0, 0.0, 100.0, 20.0),
-            margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
             child: ListTile(
               title: Text(users![index].name),
               subtitle: Text(users![index].contact),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+
                   // Edit Icon
                   IconButton(onPressed: () async {
                     print('user id is ${users![index].id}'); //test id retrieval
@@ -116,8 +117,12 @@ class _HomepageState extends State<Homepage> {
 
                     });
                   },
-                    icon: const Icon(Icons.edit),
+                    icon: const Icon(
+                        Icons.edit,
+                        color: Colors.blue
+                    ),
                   ),
+
                   // Delete Icon
                   IconButton(onPressed: () async {
                     print('user id is ${users![index].id}'); //test id retrieval
@@ -125,7 +130,10 @@ class _HomepageState extends State<Homepage> {
                     showMessageDialog("Success", "$user Detail Deleted Success.");
                     getRecord();
                   },
-                    icon: const Icon(Icons.delete),
+                    icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red
+                    ),
                   ),
                 ],
               ),
