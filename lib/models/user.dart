@@ -30,4 +30,9 @@ class User {
     "id": id,
     "name": name,
   };
+  @override
+  String toString(){
+    String result = name.toString();
+    return result;
+  }
 }

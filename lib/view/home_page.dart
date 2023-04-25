@@ -115,6 +115,7 @@ class _HomepageState extends State<Homepage> {
                 MaterialPageRoute(builder: (context)=>const addUserForm())
           ).then((data) {
             if (data != null) {
+              showMessageDialog("Success", "$data Detail Add Success.");
               getRecord();
             }
           });
