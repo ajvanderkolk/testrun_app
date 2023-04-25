@@ -40,7 +40,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> getRecord() async {
-    print('balls');
+    print('begin get Record');
 
     try {
       final userList = await UserApi().getAllUsers();
@@ -63,8 +63,25 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(title: const Text("Python RestAPI Flutter"),),
       body: Visibility (
         visible: isLoaded,
-        replacement: const Center(child: CircularProgressIndicator())
-        child: ,
+        replacement: const Center(child: CircularProgressIndicator()),
+        child: ListView.builder(
+        itemCount: users?.length,
+        itemBuilder: (context, index){
+          return Container(
+            child: ListTile(
+              title: Text(users![index].name),
+              subtitle: Text(users![index].contact),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.edit),),
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.delete),),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},

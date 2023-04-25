@@ -9,7 +9,7 @@ class UserApi {
     var client = http.Client();
     var uri = Uri.parse('http://127.0.0.1:5000/user');
     var response = await client.get(uri);
-    print(response.body);
+    //print(response.body);
     if (response.statusCode == 200) {
       var json = response.body;
       print(json); // Add this line to print the response data
