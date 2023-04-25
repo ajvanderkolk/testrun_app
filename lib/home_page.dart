@@ -40,7 +40,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> getRecord() async {
-    print('balls');
+    print('Begin getRecord');
 
     try {
       final userList = await UserApi().getAllUsers();
