@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
 
+import 'addUserForm.dart';
+
 
 
 class Homepage extends StatefulWidget {
@@ -84,7 +86,12 @@ class _HomepageState extends State<Homepage> {
       ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+              context,
+                MaterialPageRoute(builder: (context)=>const addUserForm())
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
