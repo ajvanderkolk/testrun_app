@@ -1,5 +1,3 @@
-from sqlite3 import IntegrityError
-
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -80,6 +78,18 @@ def UpdateUser(id):
     user.contact = contact
     db.session.commit()
     return user_schema.jsonify(user)
+
+
+# Delete User By ID
+@app.route('/user/<id>', methods=['DELETE'])
+def DeleteUserByID(id):
+    user = User.query.get(id)
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return user_schema.jsonify(user)
+    else:
+        return jsonify({'message': 'User not found'}), 404
 
 
 if __name__ == '__main__':
