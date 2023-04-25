@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:testrun_app/models/user.dart';
 
@@ -41,5 +40,26 @@ class UserApi {
     }
   }
 
+  Future<User> deleteUser(int id) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://127.0.0.1:5000/user/$id');
+    print('attempt delete $id');
+    final http.Response response = await client.delete(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    print('client delete passed');
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print('delete user $json'); // Add this line to print the response data
+      return User.fromJson(jsonDecode(json));
+    }
+    else {
+      print(response.statusCode);
+      throw Exception('Failed to Delete User.');
+    }
+  }
 
 }
