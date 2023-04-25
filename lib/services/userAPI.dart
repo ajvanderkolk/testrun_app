@@ -39,7 +39,7 @@ class UserApi {
       throw Exception('Failed to Save User.');
     }
   }
-
+  //Delete User
   Future<User> deleteUser(int id) async {
     var client = http.Client();
     var uri = Uri.parse('http://127.0.0.1:5000/user/$id');
@@ -61,5 +61,30 @@ class UserApi {
       throw Exception('Failed to Delete User.');
     }
   }
-
+  //Update User
+  Future<User> updateUser(String name, String contact, int id) async {
+    var client = http.Client();
+    var uri = Uri.parse('http://127.0.0.1:5000/user/$id');
+    print('attempt update $id'); //Test attempt
+    final http.Response response = await client.put(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'name' : name,
+        'contact' : contact
+      }),
+    );
+    print('client edit passed');
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print('update user $json'); // Print response data
+      return User.fromJson(jsonDecode(json));
+    }
+    else {
+      print(response.statusCode);
+      throw Exception('Failed to Update User.');
+    }
+  }
 }

@@ -34,14 +34,14 @@ class _addUserFormState extends State<addUserForm> {
               height: 20.0,
             ),
             TextField(
-                  controller: _userNameController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Enter Name',
-                    labelText: 'Name',
-                    errorText:
-                      _validateName ? 'Name Value Can\'t be Empty' : null,
-                  )),
+                controller: _userNameController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: 'Enter Name',
+                  labelText: 'Name',
+                  errorText:
+                  _validateName ? 'Name Value Can\'t be Empty' : null,
+                )),
             const SizedBox(
               height: 20.0,
             ),
@@ -70,32 +70,8 @@ class _addUserFormState extends State<addUserForm> {
                             : _validateContact = false ;
 
                       });
-                      if (_validateName == false && _validateContact == false) {
-                        var result = await UserApi().addUser(_userNameController.text, _contactController.text);
-                        Navigator.pop(context, result);
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        textStyle: const TextStyle(fontSize: 15)),
-                  child: const Text('Save Details')),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                TextButton(
-                    onPressed: () async {
-                      setState(() {
-                        _userNameController.text.isEmpty
-                            ? _validateName = true
-                            : _validateName = false;
-                        _contactController.text.isEmpty
-                            ? _validateContact = true
-                            : _validateContact = false ;
-
-                      });
                       if (_validateName == false || _validateContact == false) {
-                        var result = await UserApi().updateUser(_userNameController.text, _contactController.text, user![index].id);
+                        var result = await UserApi().updateUser(_userNameController.text, _contactController.text, 12);
                         Navigator.pop(context, result);
                       }
                     },
@@ -107,16 +83,16 @@ class _addUserFormState extends State<addUserForm> {
                 const SizedBox(
                   width: 10.0,
                 ),
-              TextButton(
-                  onPressed: () {
-                    _userNameController.text = "";
-                    _contactController.text = "";
-                  },
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                      textStyle: const TextStyle(fontSize: 15)),
-                  child: const Text('Clear Details')),
+                TextButton(
+                    onPressed: () {
+                      _userNameController.text = "";
+                      _contactController.text = "";
+                    },
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red,
+                        textStyle: const TextStyle(fontSize: 15)),
+                    child: const Text('Clear Details')),
               ],
             )
           ],

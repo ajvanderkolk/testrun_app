@@ -101,11 +101,26 @@ class _HomepageState extends State<Homepage> {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(onPressed: () {},
+                  // Edit Icon
+                  IconButton(onPressed: () async {
+                    print('user id is ${users![index].id}'); //test id retrieval
+                    //Send user to addUserForm
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=>const updateUserForm())
+                    ).then((data) async {
+                      if (data != null) {
+                        var user = await UserApi().updateUser('name', 'contact', users![index].id);
+                        showMessageDialog("Success", "$data Detail Add Success.");
+                        getRecord();
+                      }
+                    });
+                  },
                     icon: const Icon(Icons.edit),
                   ),
+                  // Delete Icon
                   IconButton(onPressed: () async {
-                    print('user id is ${users![index].id}');
+                    print('user id is ${users![index].id}'); //test id retrieval
                     var user = await UserApi().deleteUser(users![index].id);
                     showMessageDialog("Success", "$user Detail Deleted Success.");
                     getRecord();
