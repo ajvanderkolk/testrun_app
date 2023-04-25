@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -14,6 +16,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
+# User Tabel Model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -33,16 +36,59 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 
-@app.route('/', methods=['GET'])
-def home():
-    return jsonify(
-        {
-            'name': 'Andrew',
-            'msg': 'Welcome'
-        })
+# Add New User
+@app.route('/user', methods=['POST'])
+def add_user():
+    name = request.json['name']
+    contact = request.json['contact']
+    new_user = User(name=name, contact=contact)
+    db.session.add(new_user)
+    try:
+        print('Attempt to commit')
+        db.session.commit()
+    except Exception as e:
+        print('Exception caught:', e)
+        db.session.rollback()
+        return jsonify({'message': 'Contact already exists'}), 400
+    return user_schema.jsonify(new_user)
+
+
+# Show All User
+@app.route('/user', methods=['GET'])
+def getAllUser():
+    all_users = User.query.all()
+    result = users_schema.dump(all_users)
+    return jsonify(result)
+
+
+# Show User By ID
+@app.route('/user/<id>', methods=['GET'])
+def getUserByid(id):
+    user = User.query.get(id)
+    name = request.json['name']
+    contact = request.json['contact']
+    return user_schema.jsonify(user)
+
+
+# Update User By ID
+@app.route('/user/<id>', methods=['PUT'])
+def UpdateUser(id):
+    user = User.query.get(id)
+    name = request.json['name']
+    contact = request.json['contact']
+    user.name = name
+    user.contact = contact
+    db.session.commit()
+    return user_schema.jsonify(user)
 
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True, port=5000)
+
+"""
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({'name': 'Andrew', 'msg': 'Welcome'})
+"""
