@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-
+import '../models/user.dart';
 import '../services/userAPI.dart';
 
-class addUserForm extends StatefulWidget {
-  const addUserForm({Key? key}) : super(key: key);
+class updateUserForm extends StatefulWidget {
+  final User user;
+  const updateUserForm(this.user, {Key? key}) : super(key: key);
 
   @override
-  State<addUserForm> createState() => _addUserFormState();
+  State<updateUserForm> createState() => _updateUserFormState();
 }
 
-class _addUserFormState extends State<addUserForm> {
+class _updateUserFormState extends State<updateUserForm> {
   var _userNameController = TextEditingController();
   var _contactController = TextEditingController();
 
@@ -17,15 +18,21 @@ class _addUserFormState extends State<addUserForm> {
   bool _validateContact = false;
 
   @override
+  void initState() {
+    _userNameController.text = widget.user.name;
+    _contactController.text = widget.user.contact;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add New User'),),
+      appBar: AppBar(title: const Text('Update User'),),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             const Text(
-              'Add New User Details',
+              'Edit User Details',
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.blue,
@@ -70,14 +77,14 @@ class _addUserFormState extends State<addUserForm> {
                             : _validateContact = false ;
 
                       });
-                      if (_validateName == false || _validateContact == false) {
-                        var result = await UserApi().updateUser(_userNameController.text, _contactController.text, 12);
+                      if (_validateName == false && _validateContact == false) {
+                        var result = await UserApi().updateUser(_userNameController.text, _contactController.text, widget.user.id);
                         Navigator.pop(context, result);
                       }
                     },
                     style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.yellow,
+                        backgroundColor: Colors.blue,
                         textStyle: const TextStyle(fontSize: 15)),
                     child: const Text('Update Details')),
                 const SizedBox(

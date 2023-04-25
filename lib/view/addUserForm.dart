@@ -83,30 +83,6 @@ class _addUserFormState extends State<addUserForm> {
                 const SizedBox(
                   width: 10.0,
                 ),
-                TextButton(
-                    onPressed: () async {
-                      setState(() {
-                        _userNameController.text.isEmpty
-                            ? _validateName = true
-                            : _validateName = false;
-                        _contactController.text.isEmpty
-                            ? _validateContact = true
-                            : _validateContact = false ;
-
-                      });
-                      if (_validateName == false || _validateContact == false) {
-                        var result = await UserApi().updateUser(_userNameController.text, _contactController.text, user![index].id);
-                        Navigator.pop(context, result);
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.yellow,
-                        textStyle: const TextStyle(fontSize: 15)),
-                    child: const Text('Update Details')),
-                const SizedBox(
-                  width: 10.0,
-                ),
               TextButton(
                   onPressed: () {
                     _userNameController.text = "";

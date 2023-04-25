@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
+import 'package:testrun_app/view/updateUserForm.dart';
 
 import 'addUserForm.dart';
 
@@ -104,16 +105,15 @@ class _HomepageState extends State<Homepage> {
                   // Edit Icon
                   IconButton(onPressed: () async {
                     print('user id is ${users![index].id}'); //test id retrieval
-                    //Send user to addUserForm
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=>const updateUserForm())
-                    ).then((data) async {
-                      if (data != null) {
-                        var user = await UserApi().updateUser('name', 'contact', users![index].id);
-                        showMessageDialog("Success", "$data Detail Add Success.");
+                      context,
+                      MaterialPageRoute(builder: (context)=> updateUserForm(users![index]))
+                    ).then((data) {
+                      if (data!= null) {
+                        showMessageDialog("Success", "$data Detail Updated Success.");
                         getRecord();
                       }
+
                     });
                   },
                     icon: const Icon(Icons.edit),
