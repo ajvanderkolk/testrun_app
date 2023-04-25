@@ -59,6 +59,29 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  Future<void> showMessageDialog(String title, String msg) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Text(
+            msg,
+        ),
+        ),
+        actions: <Widget>[
+          TextButton(
+        child: const Text('Ok'),
+        onPressed: () => Navigator.of(context).pop(),
+        ),
+        ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,11 +109,15 @@ class _HomepageState extends State<Homepage> {
       ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () async{
           Navigator.push(
               context,
                 MaterialPageRoute(builder: (context)=>const addUserForm())
-          );
+          ).then((data) {
+            if (data != null) {
+              getRecord();
+            }
+          });
         },
         child: const Icon(Icons.add),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../services/userAPI.dart';
+
 class addUserForm extends StatefulWidget {
   const addUserForm({Key? key}) : super(key: key);
 
@@ -58,9 +60,23 @@ class _addUserFormState extends State<addUserForm> {
             Row(
               children: [
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      setState(() {
+                        _userNameController.text.isEmpty
+                            ? _validateName = true
+                            : _validateName = false;
+                        _contactController.text.isEmpty
+                            ? _validateContact = true
+                            : _validateContact = false ;
+
+                      });
+                      if (_validateName == false && _validateContact == false) {
+                        var result = await UserApi().addUser(_userNameController.text, _contactController.text);
+                        Navigator.pop(context, result);
+                      }
+                    },
                     style: TextButton.styleFrom(
-                        primary: Colors.white,
+                        foregroundColor: Colors.white,
                         backgroundColor: Colors.blue,
                         textStyle: const TextStyle(fontSize: 15)),
                   child: const Text('Save Details')),
@@ -73,7 +89,7 @@ class _addUserFormState extends State<addUserForm> {
                     _contactController.text = "";
                   },
                   style: TextButton.styleFrom(
-                      primary: Colors.white,
+                      foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
                       textStyle: const TextStyle(fontSize: 15)),
                   child: const Text('Clear Details')),
