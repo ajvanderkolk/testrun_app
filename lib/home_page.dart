@@ -61,24 +61,11 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Python RestAPI Flutter"),),
-      body: isLoaded ? ListView.builder(
-        itemCount: users?.length,
-        itemBuilder: (context, index){
-          return Container(
-            child: ListTile(
-              title: Text(users![index].name),
-              subtitle: Text(users![index].contact),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(onPressed: (){}, icon: const Icon(Icons.edit),),
-                  IconButton(onPressed: (){}, icon: const Icon(Icons.delete),),
-                ],
-              ),
-            ),
-          );
-        },
-      ) : const Center(child: CircularProgressIndicator()),
+      body: Visibility (
+        visible: isLoaded,
+        replacement: const Center(child: CircularProgressIndicator())
+        child: ,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},
         child: const Icon(Icons.add),
