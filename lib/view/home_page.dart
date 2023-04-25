@@ -86,7 +86,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Python RestAPI Flutter"),),
+      appBar: AppBar(title: const Text("User Home Page"),),
       body: Visibility (
         visible: isLoaded,
         replacement: const Center(child: CircularProgressIndicator()),
