@@ -3,6 +3,7 @@ import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
 import 'package:testrun_app/view/updateUserForm.dart';
 
+import 'AppBarContent.dart';
 import 'addUserForm.dart';
 
 
@@ -86,61 +87,72 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("User Home Page"),),
-      body: Visibility (
-        visible: isLoaded,
-        replacement: const Center(child: CircularProgressIndicator()),
-        child: ListView.builder(
-        itemCount: users?.length,
-        itemBuilder: (context, index){
-          // Figure out how to get padding in list tile
-          return Container(
-            padding: const EdgeInsets.fromLTRB(30.0, 0.0, 100.0, 20.0),
-            child: ListTile(
-              title: Text(users![index].name),
-              subtitle: Text(users![index].contact),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-
-                  // Edit Icon
-                  IconButton(onPressed: () async {
-                    print('user id is ${users![index].id}'); //test id retrieval
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=> updateUserForm(users![index]))
-                    ).then((data) {
-                      if (data!= null) {
-                        showMessageDialog("Success", "$data Detail Updated Success.");
-                        getRecord();
-                      }
-
-                    });
-                  },
-                    icon: const Icon(
-                        Icons.edit,
-                        color: Colors.blue
-                    ),
-                  ),
-
-                  // Delete Icon
-                  IconButton(onPressed: () async {
-                    print('user id is ${users![index].id}'); //test id retrieval
-                    var user = await UserApi().deleteUser(users![index].id);
-                    showMessageDialog("Success", "$user Detail Deleted Success.");
-                    getRecord();
-                  },
-                    icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red
-                    ),
-                  ),
-                ],
-              ),
+      backgroundColor: Colors.blueGrey,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50.0),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[Colors.blueAccent, Colors.blue],
             ),
-          );
-        },
+          ),
+          child: const AppBarContent(),
+        ),
       ),
+        body: Visibility (
+          visible: isLoaded,
+          replacement: const Center(child: CircularProgressIndicator()),
+          child: ListView.builder(
+          itemCount: users?.length,
+          itemBuilder: (context, index){
+            // Figure out how to get padding in list tile
+            return Container(
+              padding: const EdgeInsets.fromLTRB(30.0, 0.0, 100.0, 20.0),
+              child: ListTile(
+                title: Text(users![index].name),
+                subtitle: Text(users![index].contact),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+
+                    // Edit Icon
+                    IconButton(onPressed: () async {
+                      print('user id is ${users![index].id}'); //test id retrieval
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=> updateUserForm(users![index]))
+                      ).then((data) {
+                        if (data!= null) {
+                          showMessageDialog("Success", "$data Detail Updated Success.");
+                          getRecord();
+                        }
+
+                      });
+                    },
+                      icon: const Icon(
+                          Icons.edit,
+                          color: Colors.blue
+                      ),
+                    ),
+
+                    // Delete Icon
+                    IconButton(onPressed: () async {
+                      print('user id is ${users![index].id}'); //test id retrieval
+                      var user = await UserApi().deleteUser(users![index].id);
+                      showMessageDialog("Success", "$user Detail Deleted Success.");
+                      getRecord();
+                    },
+                      icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
@@ -159,4 +171,5 @@ class _HomepageState extends State<Homepage> {
     );
   }
 }
+
 
