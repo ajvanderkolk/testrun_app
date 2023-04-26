@@ -18,11 +18,171 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+       home: const AccountHomePage(title: 'Account Home Page'),
       // home: const MyHomePage(title: 'Home Page'),
-      home: const AccountHomePage(title: 'Account Home Page'),
+      // home: const NavigationExample(),
     );
   }
 }
+
+// Create state for Account Home Page
+class AccountHomePage extends StatefulWidget {
+  const AccountHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<AccountHomePage> createState() => _AccountHomePageState();
+}
+
+// Set content and state for Account Home Page
+class _AccountHomePageState extends State<AccountHomePage> {
+  int currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.amber,
+      appBar: AppBar(
+        title: const Text('Landing Page'),
+      ),
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+              icon: Icon(Icons.explore),
+              label: 'Explore',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.commute),
+            label: 'Commute',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.bookmark),
+            icon: Icon(Icons.bookmark_border),
+            label: 'Saved',
+          ),
+        ],
+      ),
+      body: <Widget>[
+        Center(
+          child: TextButton(
+            onPressed: () async {
+              var message = await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return const SecondPage(title: 'SecondPage');
+                  }));
+              },
+            child: const Text('Next'),
+          ),
+        ),
+        Container(
+          color: Colors.red,
+          alignment: Alignment.center,
+          child: const Text('Page 2'),
+        ),
+        Container(
+          color: Colors.blue,
+          alignment: Alignment.center,
+          child: const Text('Page 3'),
+        ),
+      ][currentPageIndex],
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+// Second Page Design
+class _SecondPageState extends State<SecondPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:  const Text('Second Page'),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.pop(context, "Returned from Second Page");
+          },
+          child: const Text('Go Back'),
+        ),
+      ),
+    );
+  }
+}
+
+// Example with 'pages' as containers
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
+
+  @override
+  State<NavigationExample> createState() => _NavigationExampleState();
+}
+
+class _NavigationExampleState extends State<NavigationExample> {
+  int currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.explore),
+            label: 'Explore',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.commute),
+            label: 'Commute',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.bookmark),
+            icon: Icon(Icons.bookmark_border),
+            label: 'Saved',
+          ),
+        ],
+      ),
+      body: <Widget>[
+        Container(
+          color: Colors.red,
+          alignment: Alignment.center,
+          child: const Text('Page 1'),
+        ),
+        Container(
+          color: Colors.green,
+          alignment: Alignment.center,
+          child: const Text('Page 2'),
+        ),
+        Container(
+          color: Colors.blue,
+          alignment: Alignment.center,
+          child: const Text('Page 3'),
+        ),
+      ][currentPageIndex],
+    );
+  }
+}
+
+
+
 // Create state for Home Page
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -85,72 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), 
-    );
-  }
-}
-
-
-// Create state for Account Home Page
-class AccountHomePage extends StatefulWidget {
-  const AccountHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<AccountHomePage> createState() => _AccountHomePageState();
-}
-
-// Set content and state for Account Home Page
-class _AccountHomePageState extends State<AccountHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account Home Page'),
-      ),
-      body: Center(
-        child: TextButton(
-          onPressed: () async {
-            var message = await Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return const SecondPage(title: 'SecondPage');
-               }));
-                    // This message will print to console
-            print(message);
-          },
-          child: const Text('Next'),
-        ),
       ),
     );
   }
 }
-
-class SecondPage extends StatefulWidget {
-  const SecondPage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<SecondPage> createState() => _SecondPageState();
-}
-
-class _SecondPageState extends State<SecondPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title:  Text('Second Page'),
-      ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            Navigator.pop(context, "Returned from Second Page");
-          },
-          child: const Text('Go Back'),
-        ),
-      ),
-    );
-  }
-}
-
-
