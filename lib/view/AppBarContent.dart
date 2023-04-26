@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
+import 'package:testrun_app/view/account_home_page.dart';
 import 'package:testrun_app/view/updateUserForm.dart';
-import 'package:testrun_app/view/user_account_page.dart';
+import 'package:testrun_app/view/home_page.dart';
 import 'addUserForm.dart';
 
 
@@ -41,9 +42,7 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const UserAccountPage(
-                            title: 'User Account Page'
-                        );
+                        return const HomePage(title: 'User Account Page');
                       }));
                 },
               ),
@@ -53,7 +52,12 @@ class AppBarContent extends StatelessWidget {
                   size: 20,
                 ),
                 color: Colors.green,
-                onPressed: () {},
+                onPressed: () async {
+                  var message = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return const HomePage(title: 'User Account Page');
+                      }));
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -61,7 +65,12 @@ class AppBarContent extends StatelessWidget {
                   size: 20,
                 ),
                 color: Colors.yellow,
-                onPressed: () {},
+                onPressed: () async {
+                  var message = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return const AccountHomePage();
+                      }));
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -69,7 +78,12 @@ class AppBarContent extends StatelessWidget {
                   size: 20,
                 ),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () async {
+                  var message = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return const HomePage(title: 'User Account Page');
+                      }));
+                },
               ),
               IconButton(
                 icon: const Icon(

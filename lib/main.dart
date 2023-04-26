@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'view/home_page.dart';
+import 'package:testrun_app/view/home_page.dart';
+import 'view/account_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Homepage(),
+      home: const HomePage(title: 'User Account Page'),
     );
   }
 }
