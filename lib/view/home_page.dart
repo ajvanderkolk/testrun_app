@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testrun_app/models/user.dart';
-import 'package:testrun_app/services/userAPI.dart';
-import 'package:testrun_app/view/updateUserForm.dart';
 import 'AppBarContent.dart';
-import 'addUserForm.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -24,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(100.0),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testrun_app/models/user.dart';
-import 'package:testrun_app/services/userAPI.dart';
 import 'package:testrun_app/view/account_home_page.dart';
-import 'package:testrun_app/view/updateUserForm.dart';
 import 'package:testrun_app/view/home_page.dart';
-import 'addUserForm.dart';
 
 
 class AppBarContent extends StatelessWidget {
@@ -16,21 +12,32 @@ class AppBarContent extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
           child: Row(
             children: <Widget>[
-              TextButton(
-                onPressed: currentRoute == '/' ? null : () async {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-                },
-                style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blueGrey,
-                    textStyle: const TextStyle(fontSize: 15)
-                ),
-                child: const Text('Navigation Bar'),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: currentRoute == '/' ? null : () async {
+                      Navigator.popUntil(context, ModalRoute.withName('/'));
+                    },
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blueGrey,
+                        textStyle: const TextStyle(fontSize: 15)
+                    ),
+                    child: const Text('Home'),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  const SizedBox(
+                    child: Text('Navigation Bar'),
+                  ),
+                ],
               ),
               const Spacer(),
               IconButton(
@@ -42,7 +49,7 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'User Account Page');
+                        return const HomePage(title: 'Home Page');
                       }));
                 },
               ),
@@ -55,7 +62,7 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'User Account Page');
+                        return const HomePage(title: 'Home Page');
                       }));
                 },
               ),
@@ -81,7 +88,7 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'User Account Page');
+                        return const HomePage(title: 'Home Page');
                       }));
                 },
               ),

@@ -89,7 +89,7 @@ class _AccountHomePageState extends State<AccountHomePage> {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(100.0),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
