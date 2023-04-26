@@ -40,6 +40,7 @@ class AppBarContent extends StatelessWidget {
                 ],
               ),
               const Spacer(),
+              // Explore - Home Page
               IconButton(
                 icon: const Icon(
                   Icons.explore,
@@ -53,6 +54,7 @@ class AppBarContent extends StatelessWidget {
                       }));
                 },
               ),
+              // Commute - Home Page
               IconButton(
                 icon: const Icon(
                   Icons.commute,
@@ -66,6 +68,7 @@ class AppBarContent extends StatelessWidget {
                       }));
                 },
               ),
+              // Bookmark - Account Home Page
               IconButton(
                 icon: const Icon(
                   Icons.bookmark_border,
@@ -79,6 +82,7 @@ class AppBarContent extends StatelessWidget {
                       }));
                 },
               ),
+              // Search - Home Page
               IconButton(
                 icon: const Icon(
                   Icons.search,
@@ -92,6 +96,7 @@ class AppBarContent extends StatelessWidget {
                       }));
                 },
               ),
+              // Vertical Dots - None
               IconButton(
                 icon: const Icon(
                   Icons.more_vert,
