@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
 import 'package:testrun_app/view/updateUserForm.dart';
+import 'AppBarContent.dart';
 import 'addUserForm.dart';
 
 
 class UserAccountPage extends StatefulWidget {
-  const UserAccountPage({Key? key}) : super(key: key);
+  const UserAccountPage({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
   State<UserAccountPage> createState() => _UserAccountPageState();
@@ -20,6 +22,18 @@ class _UserAccountPageState extends State<UserAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50.0),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[Colors.blueAccent, Colors.blue],
+            ),
+          ),
+          child: const AppBarContent(),
+        ),
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -44,7 +58,8 @@ class _UserAccountPageState extends State<UserAccountPage> {
           ),
           NavigationDestination(
             selectedIcon: Icon(
-                Icons.bookmark
+                Icons.bookmark,
+                color: Colors.amber
             ),
             icon: Icon(
                 Icons.bookmark_border,

@@ -10,8 +10,8 @@ class addUserForm extends StatefulWidget {
 }
 
 class _addUserFormState extends State<addUserForm> {
-  var _userNameController = TextEditingController();
-  var _contactController = TextEditingController();
+  final _userNameController = TextEditingController();
+  final _contactController = TextEditingController();
 
   bool _validateName = false;
   bool _validateContact = false;
@@ -79,7 +79,8 @@ class _addUserFormState extends State<addUserForm> {
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.blue,
                         textStyle: const TextStyle(fontSize: 15)),
-                  child: const Text('Save Details')),
+                  child: const Text('Save Details')
+                ),
                 const SizedBox(
                   width: 10.0,
                 ),
@@ -91,8 +92,11 @@ class _addUserFormState extends State<addUserForm> {
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
-                      textStyle: const TextStyle(fontSize: 15)),
-                  child: const Text('Clear Details')),
+                      textStyle: const TextStyle(fontSize: 15)
+                  ),
+                  child:
+                      const Text('Clear Details')
+                  ),
               ],
             )
           ],

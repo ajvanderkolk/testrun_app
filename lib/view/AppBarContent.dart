@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testrun_app/models/user.dart';
 import 'package:testrun_app/services/userAPI.dart';
 import 'package:testrun_app/view/updateUserForm.dart';
+import 'package:testrun_app/view/user_account_page.dart';
 import 'addUserForm.dart';
 
 
@@ -10,6 +11,8 @@ class AppBarContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -17,9 +20,16 @@ class AppBarContent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Row(
             children: <Widget>[
-              const Text(
-                'Navigation Bar',
-                style: TextStyle(color: Colors.white),
+              TextButton(
+                onPressed: currentRoute == '/' ? null : () async {
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                },
+                style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blueGrey,
+                    textStyle: const TextStyle(fontSize: 15)
+                ),
+                child: const Text('Navigation Bar'),
               ),
               const Spacer(),
               IconButton(
@@ -28,7 +38,14 @@ class AppBarContent extends StatelessWidget {
                   size: 20,
                 ),
                 color: Colors.orange,
-                onPressed: () {},
+                onPressed: () async {
+                  var message = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return const UserAccountPage(
+                            title: 'User Account Page'
+                        );
+                      }));
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -39,7 +56,6 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () {},
               ),
               IconButton(
-                selectedIcon: Icon(Icons.bookmark),
                 icon: const Icon(
                   Icons.bookmark_border,
                   size: 20,
