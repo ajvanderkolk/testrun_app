@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:testrun_app/view/account_home_page.dart';
 import 'package:testrun_app/view/home_page.dart';
 
-
 class AppBarContent extends StatelessWidget {
   const AppBarContent({super.key});
 
@@ -21,14 +20,28 @@ class AppBarContent extends StatelessWidget {
               Row(
                 children: [
                   TextButton(
-                    onPressed: currentRoute == '/' ? null : () async {
-                      Navigator.popUntil(context, ModalRoute.withName('/'));
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (route) => false);
                     },
                     style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.blueGrey,
-                        textStyle: const TextStyle(fontSize: 15)
-                    ),
+                        textStyle: const TextStyle(fontSize: 15)),
+                    child: const Text('To Login Page'),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  TextButton(
+                    onPressed: currentRoute == '/home' ? null : () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/home', (route) => false);
+                    },
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blueGrey,
+                        textStyle: const TextStyle(fontSize: 15)),
                     child: const Text('Home'),
                   ),
                   const SizedBox(
@@ -50,8 +63,8 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'Home Page');
-                      }));
+                    return const HomePage(title: 'Home Page');
+                  }));
                 },
               ),
               // Commute - Home Page
@@ -64,8 +77,8 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'Home Page');
-                      }));
+                    return const HomePage(title: 'Home Page');
+                  }));
                 },
               ),
               // Bookmark - Account Home Page
@@ -78,8 +91,8 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const AccountHomePage();
-                      }));
+                    return const AccountHomePage();
+                  }));
                 },
               ),
               // Search - Home Page
@@ -92,8 +105,8 @@ class AppBarContent extends StatelessWidget {
                 onPressed: () async {
                   var message = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return const HomePage(title: 'Home Page');
-                      }));
+                    return const HomePage(title: 'Home Page');
+                  }));
                 },
               ),
               // Vertical Dots - None
