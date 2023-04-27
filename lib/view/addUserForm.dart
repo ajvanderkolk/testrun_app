@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../services/userAPI.dart';
 
 class addUserForm extends StatefulWidget {
@@ -19,7 +18,9 @@ class _addUserFormState extends State<addUserForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add New User'),),
+      appBar: AppBar(
+        title: const Text('Add New User'),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -29,19 +30,20 @@ class _addUserFormState extends State<addUserForm> {
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.blue,
-                  fontWeight: FontWeight.w500),),
+                  fontWeight: FontWeight.w500),
+            ),
             const SizedBox(
               height: 20.0,
             ),
             TextField(
-                  controller: _userNameController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Enter Name',
-                    labelText: 'Name',
-                    errorText:
+                controller: _userNameController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: 'Enter Name',
+                  labelText: 'Name',
+                  errorText:
                       _validateName ? 'Name Value Can\'t be Empty' : null,
-                  )),
+                )),
             const SizedBox(
               height: 20.0,
             ),
@@ -52,7 +54,7 @@ class _addUserFormState extends State<addUserForm> {
                   hintText: 'Enter Contact Number',
                   labelText: 'Contact No',
                   errorText:
-                  _validateContact ? 'Contact Value Can\'t be Empty' : null,
+                      _validateContact ? 'Contact Value Can\'t be Empty' : null,
                 )),
             const SizedBox(
               height: 20.0,
@@ -67,11 +69,11 @@ class _addUserFormState extends State<addUserForm> {
                             : _validateName = false;
                         _contactController.text.isEmpty
                             ? _validateContact = true
-                            : _validateContact = false ;
-
+                            : _validateContact = false;
                       });
                       if (_validateName == false && _validateContact == false) {
-                        var result = await UserApi().addUser(_userNameController.text, _contactController.text);
+                        var result = await UserApi().addUser(
+                            _userNameController.text, _contactController.text);
                         Navigator.pop(context, result);
                       }
                     },
@@ -79,24 +81,20 @@ class _addUserFormState extends State<addUserForm> {
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.blue,
                         textStyle: const TextStyle(fontSize: 15)),
-                  child: const Text('Save Details')
-                ),
+                    child: const Text('Save Details')),
                 const SizedBox(
                   width: 10.0,
                 ),
-              TextButton(
-                  onPressed: () {
-                    _userNameController.text = "";
-                    _contactController.text = "";
-                  },
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                      textStyle: const TextStyle(fontSize: 15)
-                  ),
-                  child:
-                      const Text('Clear Details')
-                  ),
+                TextButton(
+                    onPressed: () {
+                      _userNameController.text = "";
+                      _contactController.text = "";
+                    },
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red,
+                        textStyle: const TextStyle(fontSize: 15)),
+                    child: const Text('Clear Details')),
               ],
             )
           ],
