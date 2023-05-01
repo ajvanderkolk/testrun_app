@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText: 'Enter Password',
                                 labelText: 'Password',
                                 errorText: _validatePassword
-                                    ? 'Username Can\'t be Empty'
+                                    ? 'Password Can\'t be Empty'
                                     : null,
                               )),
                         ),

@@ -1,10 +1,15 @@
 import hashlib
 from datetime import datetime
 import os
+import logging
 from uuid import uuid4
 from flask import Flask, request, jsonify
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+
+# Set up the logger
+logging.basicConfig(filename='myapp.log', level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 # Main
 app = Flask(__name__)
@@ -108,6 +113,8 @@ def add_login_credential():
         user_db.session.rollback()
         return jsonify({'message': 'Username/Email/Phone Number already exists \n or session id already exists '
                                    'meaning you already signed up'}), 400
+    # Log the request
+    logging.info('Adding new login credential: %s', request.json)
 
     return login_credential_schema.jsonify(new_login_credential)
 
@@ -117,6 +124,42 @@ def add_login_credential():
 def get_all_login_credentials():
     all_login_credentials = LoginCredential.query.all()
     result = login_credentials_schema.dump(all_login_credentials)
+    # Log the request
+    logging.info('Retrieving all login credentials')
+    return jsonify(result)
+
+
+# Login Route
+@app.route('/login', methods=['POST'])
+def login():
+    # Get the user's credentials from the request
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    # Query the database to check if user exists
+    credential = LoginCredential.query.filter_by(username=username).first()
+
+    # Log the request
+    logging.info(f'Login request for username {username}')
+
+    if not credential:
+        # User doesn't exist
+        logging.info(f'{username} Invalid username')
+        return jsonify({'error': 'Invalid username or password'}), 401
+    elif not credential.check_password(password):
+        # Password is incorrect
+        logging.info(f'{username} Invalid password')
+        return jsonify({'error': 'Invalid username or password'}), 401
+    else:
+        # Login successful
+        logging.info(f'{username} Login successful')
+        return jsonify({'message': 'Login successful'}), 200
+
+
+@app.route('/login', methods=['GET'])
+def getLogin():
+    all_sessions = LoginCredential.query.all()
+    result = login_credentials_schema.dump(all_sessions)
     return jsonify(result)
 
 
@@ -176,34 +219,6 @@ def DeleteUserByID(id):
         return user_schema.jsonify(user)
     else:
         return jsonify({'message': 'User not found'}), 404
-
-
-# Login Route
-@app.route('/login', methods=['POST'])
-def login():
-    # Get the user's credentials from the request
-    username = request.json.get('username')
-    password = request.json.get('password')
-
-    # Query the database to check if user exists
-    credential = LoginCredential.query.filter_by(username=username).first()
-
-    if not credential:
-        # User doesn't exist
-        return jsonify({'error': 'Invalid username or password'}), 401
-    elif not credential.check_password(password):
-        # Password is incorrect
-        return jsonify({'error': 'Invalid username or password'}), 401
-    else:
-        # Login successful
-        return jsonify({'message': 'Login successful'}), 200
-
-
-@app.route('/login', methods=['GET'])
-def getLogin():
-    all_sessions = LoginCredential.query.all()
-    result = login_credentials_schema.dump(all_sessions)
-    return jsonify(result)
 
 
 if __name__ == '__main__':
