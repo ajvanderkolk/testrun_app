@@ -38,6 +38,7 @@ dependencies:
   path_provider: ^2.0.2 #add this line
   file_picker: ^4.0.0  # add this line
   http: ^0.13.4
+  logging: ^1.1.0
 
 dev_dependencies:
   flutter_test:
