@@ -2,7 +2,7 @@
 *.class
 *.log
 log.txt
-*sqlite
+*.sqlite
 *.pyc
 *.swp
 .DS_Store
