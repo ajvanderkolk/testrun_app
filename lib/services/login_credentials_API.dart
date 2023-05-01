@@ -18,7 +18,8 @@ class LoginCredentialAPI {
   }
 
   // Add New LoginCredential
-  Future<LoginCredentials> addLoginCredential(LoginCredentials loginCredentials) async {
+  Future<LoginCredentials> addLoginCredential(
+      LoginCredentials loginCredentials) async {
     var client = http.Client();
     var uri = Uri.parse('http://127.0.0.1:5000/login-credential');
     final http.Response response = await client.post(
@@ -80,6 +81,29 @@ class LoginCredentialAPI {
     } else {
       print(response.statusCode);
       throw Exception('Failed to Update LoginCredential.');
+    }
+  }
+}
+
+class LoginAPI {
+  static const String baseUrl = 'http://localhost:5000';
+
+  static Future<Map<String, dynamic>> login(
+      String username, String password) async {
+    final url = Uri.parse('$baseUrl/login');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to login: ${response.body}');
     }
   }
 }

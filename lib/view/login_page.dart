@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testrun_app/view/signup_page.dart';
 import '../layout/drawer_asset.dart';
+import '../services/login_credentials_API.dart';
 import 'AppBarContent.dart';
 import 'home_page.dart';
 
@@ -20,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
@@ -179,8 +179,16 @@ class _LoginPageState extends State<LoginPage> {
                           });
                           if (_validateUsername == false &&
                               _validatePassword == false) {
-                            print('Login Success');
-                            Navigator.pushNamed(context, '/home');
+                            final String username = _usernameController.text;
+                            final String password = _passwordController.text;
+                            LoginAPI.login(username, password).then((response) {
+                              print('Login Success');
+                              Navigator.pushNamed(context, '/home');
+                            }).catchError((error) {
+                              // Handle login error
+                              print('fail');
+                              print(error);
+                            });
                           }
                         },
                         style: TextButton.styleFrom(
