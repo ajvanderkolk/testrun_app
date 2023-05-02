@@ -21,9 +21,18 @@ class MyApp extends StatelessWidget {
     logger.info('Building MyApp');
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Test Run App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'LibreBaskerville',
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.windows: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       routes: {
         '/': (context) {
