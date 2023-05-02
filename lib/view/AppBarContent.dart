@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testrun_app/view/account_home_page.dart';
 import 'package:testrun_app/view/home_page.dart';
+import 'package:logging/logging.dart';
 
 class AppBarContent extends StatelessWidget {
   const AppBarContent({super.key});
@@ -8,6 +9,7 @@ class AppBarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
+    final logger = Logger('LoginPage');
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -19,25 +21,16 @@ class AppBarContent extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/', (route) => false);
-                    },
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blueGrey,
-                        textStyle: const TextStyle(fontSize: 15)),
-                    child: const Text('To Login Page'),
-                  ),
                   const SizedBox(
                     width: 10.0,
                   ),
                   TextButton(
-                    onPressed: currentRoute == '/home' ? null : () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/home', (route) => false);
-                    },
+                    onPressed: currentRoute == '/home'
+                        ? null
+                        : () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/home', (route) => false);
+                          },
                     style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.blueGrey,
@@ -117,6 +110,19 @@ class AppBarContent extends StatelessWidget {
                 ),
                 color: Colors.white,
                 onPressed: () {},
+              ),
+              IconButton(
+                onPressed: () async {
+                  logger.fine('Navigating to SignUp page');
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/', (route) => false);
+                },
+                tooltip: 'Logout',
+                icon: const Icon(
+                  Icons.logout,
+                  size: 20,
+                ),
+                color: Colors.white,
               ),
             ],
           ),
