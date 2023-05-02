@@ -56,6 +56,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  fonts:
+    - family: LibreBaskerville
+      fonts:
+        - asset: assets/fonts/LibreBaskerville-Regular.ttf
+        - asset: assets/fonts/LibreBaskerville-Bold.ttf
+        - asset: assets/fonts/LibreBaskerville-Italic.ttf
+          style: italic
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
