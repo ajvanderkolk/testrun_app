@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final logger = Logger('LoginPage');
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(12, 59, 46, 1),
       appBar: AppBar(
         title: const Text('Login'),
         backgroundColor: const Color.fromRGBO(12, 59, 46, 1),
@@ -52,13 +53,13 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
       // drawer: const drawerAsset(),
-      body: Container(
+      body: SingleChildScrollView(child: Container(
         color: const Color.fromRGBO(12, 59, 46, 1),
         child: Column(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -252,11 +253,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 50.0),
                 ],
               ),
             ),
           ], // Row Children
         ),
+      ),
       ),
     );
   }
